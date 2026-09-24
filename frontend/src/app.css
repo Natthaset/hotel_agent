@@ -1,0 +1,56 @@
+:root {
+  --bg-base: #090D16;
+  --bg-surface: rgba(18, 24, 38, 0.75);
+  --bg-card: rgba(28, 36, 56, 0.6);
+  --border-subtle: rgba(212, 175, 55, 0.2);
+  --border-glow: rgba(212, 175, 55, 0.45);
+  --gold-primary: #D4AF37;
+  --gold-light: #F7E7CE;
+  --gold-gradient: linear-gradient(135deg, #ECC876 0%, #D4AF37 50%, #A67C1E 100%);
+  --text-main: #F3F4F6;
+  --text-muted: #9CA3AF;
+  --text-dim: #6B7280;
+  --accent-emerald: #10B981;
+  --bubble-ai: rgba(24, 32, 50, 0.85);
+  --bubble-user: linear-gradient(135deg, #1E293B 0%, #2A364F 100%);
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --shadow-luxury: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 30px rgba(212, 175, 55, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-base);
+  background-image: 
+    radial-gradient(circle at 15% 15%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 85% 85%, rgba(16, 185, 129, 0.05) 0%, transparent 45%),
+    linear-gradient(180deg, #070A10 0%, #0D1322 100%);
+  color: var(--text-main);
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+/* Scrollbar customization */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(212, 175, 55, 0.25);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(212, 175, 55, 0.5);
+}

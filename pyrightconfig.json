@@ -1,0 +1,15 @@
+{
+  "include": [
+    "ai-orchestrator"
+  ],
+  "exclude": [
+    "**/node_modules",
+    "**/__pycache__",
+    "ai-orchestrator/.venv"
+  ],
+  "venvPath": "ai-orchestrator",
+  "venv": ".venv",
+  "extraPaths": [
+    "ai-orchestrator"
+  ]
+}

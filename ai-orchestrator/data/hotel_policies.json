@@ -1,0 +1,42 @@
+[
+  {
+    "id": "policy_checkin_checkout",
+    "title": "Check-in and Check-out Policies",
+    "content": "Check-in time at Grand Azure Resort begins at 15:00 (3:00 PM). Check-out time is strictly 12:00 (12:00 PM noon). Early check-in from 11:00 AM and late check-out until 14:00 (2:00 PM) are subject to room availability upon request. Guests in Executive Suites and the Royal Penthouse enjoy guaranteed late check-out until 14:00 at no extra charge. Valid government-issued photo ID and a credit card or cash deposit for incidentals are required upon check-in."
+  },
+  {
+    "id": "policy_breakfast_dining",
+    "title": "Breakfast and Dining Information",
+    "content": "Breakfast is served daily at the Azure Horizon Oceanfront Restaurant from 06:30 to 10:30 AM on weekdays and until 11:00 AM on weekends. It features a gourmet international buffet, artisan French pastries, live egg and noodle stations, and fresh tropical fruit juices. All Deluxe King, Executive Suite, Twin Villa, and Penthouse bookings include complimentary daily breakfast for all registered guests. 24-hour in-room private dining is also available with our curated international and authentic Thai menu."
+  },
+  {
+    "id": "policy_pool_spa_wellness",
+    "title": "Swimming Pools, Gym, and Spa Facilities",
+    "content": "The beachfront Infinity Pool and children's splash pool are open daily from 07:00 to 21:00. Poolside towel service and sun loungers are complimentary. The 24-hour Fitness Center is located on Level 3, fully equipped with Technogym cardio and strength machines. The Lotus Blossom Luxury Wellness Spa operates daily from 10:00 to 22:00, offering traditional Thai massage, hot stone aromatherapy, steam sauna, and ice plunge baths. Advance booking for spa treatments is highly recommended."
+  },
+  {
+    "id": "policy_cancellation",
+    "title": "Cancellation and Amendment Policy",
+    "content": "Standard reservations can be cancelled or amended free of charge up to 48 hours prior to the official check-in date (15:00 local time). Cancellations or no-shows within 48 hours will be subject to a fee equal to the first night's room charge plus applicable taxes. Special promotional or non-refundable rates cannot be cancelled or refunded once confirmed. In case of flight cancellations or medical emergencies, please contact our concierge team with supporting documentation for case-by-case review."
+  },
+  {
+    "id": "policy_pet_rules",
+    "title": "Pet Policy and Guidelines",
+    "content": "Grand Azure Resort welcomes well-mannered pets (dogs and cats up to 10 kg / 22 lbs) exclusively in designated Lagoon View Twin Villas and ground floor garden suites. A pet sanitation and hospitality fee of 1,500 THB per pet per night applies. Pets must remain on a leash or in a carrier in public outdoor walkways and are not permitted inside the main restaurants, swimming pool water, or fitness center. Maximum 2 pets per room. Please inform the concierge at the time of booking to prepare pet bedding and dining bowls."
+  },
+  {
+    "id": "policy_smoking",
+    "title": "Smoking and Vaping Regulations",
+    "content": "Grand Azure Resort maintains a 100% smoke-free environment across all indoor spaces, including guest suites, corridors, restaurants, and balconies. Smoking, vaping, and electronic cigarettes are strictly prohibited indoors. Designated luxury outdoor smoking gazebos are located in the tropical garden area. A cleaning and ozone sanitization fee of 5,000 THB will be charged if evidence of smoking is detected inside any guest accommodation."
+  },
+  {
+    "id": "policy_transportation_parking",
+    "title": "Airport Transfer and Valet Parking",
+    "content": "Complimentary 24-hour valet parking and secure underground parking with EV charging stations (Tesla & Type 2) are provided for all registered guests. Private airport limousine transfers between Suvarnabhumi or Don Mueang International Airports and the resort are available in Mercedes S-Class or BMW 7 Series at 2,500 THB per trip. Airport limousine transfers are completely complimentary for guests staying in Executive Panorama Suites or the Royal Penthouse."
+  },
+  {
+    "id": "policy_wifi_business",
+    "title": "Internet, Technology, and Business Center",
+    "content": "High-speed optical fiber Wi-Fi (500 Mbps download / 300 Mbps upload) is provided complimentary throughout all suites, public grounds, and beachfront areas. Each suite is equipped with a Smart TV with Apple AirPlay, Chromecast, and high-fidelity Bluetooth audio. Private meeting pods and boardrooms in the Executive Club Lounge are available for reservation with high-resolution video conferencing equipment."
+  }
+]

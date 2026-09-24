@@ -1,0 +1,164 @@
+services:
+  # ----------------------------------------------------------------------------
+  # Relational Database: MySQL 8.0
+  # ----------------------------------------------------------------------------
+  mysql-db:
+    image: mysql:8.0
+    platform: linux/arm64
+    container_name: hotel-mysql
+    restart: unless-stopped
+    ports:
+      - "${MYSQL_PORT:-3306}:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-hotel_secret_root_2026}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-hotel_db}
+      MYSQL_USER: ${MYSQL_USER:-hotel_user}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-hotel_pass_2026}
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - hotel-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "${MYSQL_USER:-hotel_user}", "-p${MYSQL_PASSWORD:-hotel_pass_2026}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+
+  # ----------------------------------------------------------------------------
+  # Vector Database: Qdrant
+  # ----------------------------------------------------------------------------
+  qdrant-db:
+    image: qdrant/qdrant:latest
+    platform: linux/arm64
+    container_name: hotel-qdrant
+    restart: unless-stopped
+    ports:
+      - "${QDRANT_PORT:-6333}:6333"
+    volumes:
+      - qdrant_data:/qdrant/storage
+    networks:
+      - hotel-network
+    healthcheck:
+      test: ["CMD-SHELL", "bash -c 'echo > /dev/tcp/localhost/6333'"]
+      interval: 5s
+      timeout: 5s
+      retries: 6
+
+  # ----------------------------------------------------------------------------
+  # Local LLM Provider: Ollama (8GB-10GB Memory Allocated for M5 Pro)
+  # ----------------------------------------------------------------------------
+  ollama:
+    profiles:
+      - docker-ollama
+    image: ollama/ollama:latest
+    platform: linux/arm64
+    container_name: hotel-ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    environment:
+      - OLLAMA_KEEP_ALIVE=${OLLAMA_KEEP_ALIVE:-30m}
+    deploy:
+      resources:
+        limits:
+          memory: 10G
+        reservations:
+          memory: 8G
+    networks:
+      - hotel-network
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # ----------------------------------------------------------------------------
+  # Core Business Logic: .NET 10 Web API
+  # ----------------------------------------------------------------------------
+  dotnet-api:
+    build:
+      context: ./backend-dotnet
+      dockerfile: Dockerfile
+    platform: linux/arm64
+    container_name: hotel-dotnet-api
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT:-Development}
+      - ASPNETCORE_URLS=${ASPNETCORE_URLS:-http://+:8080}
+      - DB_CONNECTION_STRING=Server=mysql-db;Port=3306;Database=${MYSQL_DATABASE:-hotel_db};User=${MYSQL_USER:-hotel_user};Password=${MYSQL_PASSWORD:-hotel_pass_2026};
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+    networks:
+      - hotel-network
+
+  # ----------------------------------------------------------------------------
+  # AI Orchestrator: Python 3.11 + FastAPI + LangGraph
+  # ----------------------------------------------------------------------------
+  ai-agent:
+    build:
+      context: ./ai-orchestrator
+      dockerfile: Dockerfile
+    platform: linux/arm64
+    container_name: hotel-ai-orchestrator
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - OLLAMA_BASE_URL=${OLLAMA_BASE_URL:-http://host.docker.internal:11434}
+      - OLLAMA_MODEL=${OLLAMA_MODEL:-qwen2.5:7b}
+      - QDRANT_HOST=${QDRANT_HOST:-qdrant-db}
+      - QDRANT_PORT=${QDRANT_PORT:-6333}
+      - QDRANT_COLLECTION=${QDRANT_COLLECTION:-hotel_policies}
+      - DOTNET_API_URL=http://dotnet-api:8080
+      - EMBEDDING_MODEL=${EMBEDDING_MODEL:-BAAI/bge-small-en-v1.5}
+    depends_on:
+      dotnet-api:
+        condition: service_started
+      qdrant-db:
+        condition: service_healthy
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - hotel-network
+
+  # ----------------------------------------------------------------------------
+  # Frontend: SvelteKit UI (TypeScript)
+  # ----------------------------------------------------------------------------
+  svelte-frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    platform: linux/arm64
+    container_name: hotel-frontend
+    restart: unless-stopped
+    ports:
+      - "${PORT:-3000}:3000"
+    environment:
+      - PORT=${PORT:-3000}
+      - PUBLIC_AI_API_URL=${PUBLIC_AI_API_URL:-http://localhost:8000}
+      - AI_INTERNAL_URL=http://ai-agent:8000
+    depends_on:
+      ai-agent:
+        condition: service_started
+    networks:
+      - hotel-network
+
+networks:
+  hotel-network:
+    name: hotel-network
+    driver: bridge
+
+volumes:
+  mysql_data:
+    name: hotel_mysql_data
+  qdrant_data:
+    name: hotel_qdrant_data
+  ollama_data:
+    name: hotel_ollama_data

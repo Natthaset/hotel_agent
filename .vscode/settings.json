@@ -1,0 +1,7 @@
+{
+  "python.defaultInterpreterPath": "${workspaceFolder}/ai-orchestrator/.venv/bin/python",
+  "python.pythonPath": "${workspaceFolder}/ai-orchestrator/.venv/bin/python",
+  "python.analysis.extraPaths": [
+    "${workspaceFolder}/ai-orchestrator"
+  ]
+}
